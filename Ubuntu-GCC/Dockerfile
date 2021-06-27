@@ -18,3 +18,5 @@ RUN apt-get install -y openssh-server
 RUN mkdir -p /var/run/sshd
 
 COPY run.sh /home
+RUN chmod a+x /home/run.sh
+

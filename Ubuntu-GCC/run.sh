@@ -1,2 +1,2 @@
 #!/bin/bash
-/usr/bin/sshd -D
+/usr/sbin/sshd -D
