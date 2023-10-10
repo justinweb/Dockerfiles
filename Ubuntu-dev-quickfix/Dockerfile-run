@@ -1,0 +1,23 @@
+FROM proglab/quickfix:2.1 as quickfix
+
+FROM proglab/ubuntu-dev-v2:1.0 as base
+
+COPY --from=quickfix /usr/local/bin /usr/local/bin
+COPY --from=quickfix /usr/local/include/quickfix /usr/local/include/quickfix
+COPY --from=quickfix /usr/local/lib/libquickfix.so.16.0.1 /usr/local/lib
+COPY --from=quickfix /usr/local/share/quickfix /usr/local/share/quickfix
+
+WORKDIR /usr/local/lib
+RUN ln -s libquickfix.so.16.0.1 libquickfix.so.16
+RUN ln -s libquickfix.so.16 libquickfix.so
+
+WORKDIR /
+RUN apt-get install gdb -y
+RUN apt update -y
+RUN apt upgrade -y
+
+WORKDIR /home
+RUN ldconfig
+
+RUN mkdir -p /var/run/sshd
+RUN ssh-keygen -A
