@@ -1,0 +1,20 @@
+version: "3.3"
+# ok
+services:
+  wpweb:    
+      image: wordpress:latest
+      #image: proglab/wordpress:1.0
+      ports:
+        - "8080:80"        
+      container_name: wptravel        
+      network_mode: bridge
+      #volumes:
+      #    - wptravel_html:/var/www/html
+      environment:
+        WORDPRESS_DB_HOST: 192.168.2.142
+        WORDPRESS_DB_USER: wptravel
+        WORDPRESS_DB_PASSWORD: travel@5171
+        WORDPRESS_DB_NAME: wptravel
+#volumes:
+#    wptravel_html:
+#       external: true

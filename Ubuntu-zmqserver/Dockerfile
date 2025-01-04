@@ -17,6 +17,7 @@ RUN TZ=Asia/Taipei \
 RUN apt install sudo vim wget git -y
 RUN apt install openssh-server net-tools -y
 RUN apt install build-essential cmake gdb -y
+RUN apt install libzmq3-dev -y
 RUN mkdir -p /var/run/sshd
 RUN ssh-keygen -A
 
@@ -39,4 +40,3 @@ RUN echo "$UName:$mypassword" | chpasswd
 
 ENTRYPOINT [ "/usr/sbin/sshd", "-D" ]
 EXPOSE 22/tcp
-
