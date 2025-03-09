@@ -17,22 +17,6 @@ RUN apt-get install sudo vim wget git \
     build-essential cmake gdb \
     libssl-dev -y
 
-WORKDIR /tmp
-#RUN git clone https://code.prog-lab.com/justin/quickfix.git && \
-COPY ./quickfix /tmp/quickfix
-RUN cd quickfix && \
-    mkdir -p build && \
-    cd build && \
-    cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DHAVE_SSL=ON .. && \
-    make && make install && \
-    cp /tmp/quickfix/build/examples/executor/C++/executor /usr/local/bin && \
-    cp /tmp/quickfix/build/examples/ordermatch/ordermatch /usr/local/bin && \
-    cp /tmp/quickfix/build/examples/tradeclient/tradeclient /usr/local/bin && \
-    rm -rf /tmp/quickfix && \
-    ldconfig
-
-WORKDIR /home
-
 USER root
 RUN mkdir -p /var/run/sshd && \
     ssh-keygen -A && \
@@ -54,3 +38,5 @@ RUN cp /etc/skel/.profile /home/$UName/.profile && \
     echo "colorscheme desert" > /home/$UName/.vimrc
 
 USER root
+EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D"]
